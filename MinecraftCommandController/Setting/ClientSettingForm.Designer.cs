@@ -1,4 +1,4 @@
-﻿namespace MinecraftCommandController
+﻿namespace MinecraftCommandController.Setting
 {
 	partial class ClientSettingForm
 	{

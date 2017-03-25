@@ -1,4 +1,4 @@
-﻿namespace MinecraftCommandController
+﻿namespace MinecraftCommandController.Tools
 {
 	partial class ServerConsoleForm
 	{

@@ -88,10 +88,10 @@
     <Compile Include="Base\MccSettingPageBase.Designer.cs">
       <DependentUpon>MccSettingPageBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="ClientSettingForm.cs">
+    <Compile Include="Setting\ClientSettingForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ClientSettingForm.Designer.cs">
+    <Compile Include="Setting\ClientSettingForm.Designer.cs">
       <DependentUpon>ClientSettingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Contents\Minecraft\McEffect.cs">
@@ -134,10 +134,10 @@
     <Compile Include="Contents\Minecraft\McTeleport.Designer.cs">
       <DependentUpon>McTeleport.cs</DependentUpon>
     </Compile>
-    <Compile Include="ServerConsoleForm.cs">
+    <Compile Include="Tools\ServerConsoleForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ServerConsoleForm.Designer.cs">
+    <Compile Include="Tools\ServerConsoleForm.Designer.cs">
       <DependentUpon>ServerConsoleForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Setting\AppSettingForm.cs">
@@ -184,7 +184,7 @@
     <EmbeddedResource Include="AppMainForm.resx">
       <DependentUpon>AppMainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ClientSettingForm.resx">
+    <EmbeddedResource Include="Setting\ClientSettingForm.resx">
       <DependentUpon>ClientSettingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Contents\Minecraft\McEffect.resx">
@@ -202,7 +202,7 @@
     <EmbeddedResource Include="Contents\Minecraft\McTeleport.resx">
       <DependentUpon>McTeleport.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ServerConsoleForm.resx">
+    <EmbeddedResource Include="Tools\ServerConsoleForm.resx">
       <DependentUpon>ServerConsoleForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\AppSettingForm.resx">

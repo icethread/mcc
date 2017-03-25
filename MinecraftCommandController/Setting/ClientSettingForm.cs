@@ -7,7 +7,7 @@ using MinecraftCommandController.Daos;
 using MinecraftCommandController.Entities;
 using MinecraftCommandController.Util;
 
-namespace MinecraftCommandController
+namespace MinecraftCommandController.Setting
 {
 	public partial class ClientSettingForm : Form
 	{
