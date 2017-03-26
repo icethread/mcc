@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 using MinecraftCommandController.Base;
 using MinecraftCommandController.Contents.Minecraft;
 using MinecraftCommandController.Contents.Skript;
+using MinecraftCommandController.Contents.Dynmap;
 using MinecraftCommandController.Daos;
 using MinecraftCommandController.Entities;
 using MinecraftCommandController.Setting;
@@ -21,9 +24,11 @@ namespace MinecraftCommandController
 		private McEffect mcEffect;
 		private McGameRule mcGameRule;
 		private SkList skList;
+		private DmWeb dmWeb;
 		private Dictionary<string, Dictionary<string, MccContentPageBase>> dicTools;
 		private Dictionary<string, MccContentPageBase> dicMinecraft;
 		private Dictionary<string, MccContentPageBase> dicSkript;
+		private Dictionary<string, MccContentPageBase> dicDynmap;
 		//private Dictionary<string, MccContentPageBase> dicHawkEye;
 		private string sSelectedTool;
 
@@ -31,8 +36,16 @@ namespace MinecraftCommandController
 		public ServerConsoleForm serverConsoleForm;
 		public ClientSettingForm clientSettingForm;
 
+		RegistryKey regkey = Registry.CurrentUser.CreateSubKey(AppConst.FEATURE_BROWSER_EMULATION);
+		string process_name = Process.GetCurrentProcess().ProcessName + ".exe";
+		string process_dbg_name = Process.GetCurrentProcess().ProcessName + ".vshost.exe";
+
 		private void init()
 		{
+			// IEバージョンの指定
+			regkey.SetValue(process_name, AppConst.FEATURE_BROWSER_VERSION, RegistryValueKind.DWord);
+			regkey.SetValue(process_dbg_name, AppConst.FEATURE_BROWSER_VERSION, RegistryValueKind.DWord);
+
 			//設定のロード
 			settings = SettingDao.LoadSettings();
 
@@ -40,10 +53,12 @@ namespace MinecraftCommandController
 
 			dicMinecraft = new Dictionary<string, MccContentPageBase>();
 			dicSkript = new Dictionary<string, MccContentPageBase>();
+			dicDynmap = new Dictionary<string, MccContentPageBase>();
 			//dicHawkEye = new Dictionary<string, MccContentPageBase>();
 
 			dicTools.Add("Minecraft", dicMinecraft);
 			dicTools.Add("Skript", dicSkript);
+			dicTools.Add("Dynmap", dicDynmap);
 			//dicTools.Add("HawkEye", dicHawkEye);
 
 			//Minecraft.McGameMode
@@ -72,6 +87,12 @@ namespace MinecraftCommandController
 			skList.Visible = false;
 			panel2.Controls.Add(skList);
 			dicSkript.Add("ファイル一覧", skList);
+
+			//Dynmap.DmWeb
+			dmWeb = new DmWeb(this);
+			dmWeb.Visible = false;
+			panel2.Controls.Add(dmWeb);
+			dicDynmap.Add("WEB", dmWeb);
 
 			settingForm = new AppSettingForm(this);
 			serverConsoleForm = new ServerConsoleForm(this);
@@ -187,26 +208,6 @@ namespace MinecraftCommandController
 			settingForm.ShowDialog();
 		}
 
-		private void AppMainForm_Load(object sender, EventArgs e)
-		{
-			//init();
-		}
-
-		private void AppMainForm_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			//サーバーが起動中の場合
-			if (AppSession.isRunningServer)
-			{
-				if (e.CloseReason == CloseReason.UserClosing)
-				{
-					// × ボタンをキャンセル
-					e.Cancel = true;
-					MessageBox.Show("終了する前にサーバーを停止する必要があります。");
-					serverConsoleForm.Show();
-				}
-			}
-		}
-
 		private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			fncChangeContent();
@@ -253,6 +254,31 @@ namespace MinecraftCommandController
 		{
 			clientSettingForm.StartPosition = FormStartPosition.CenterParent;
 			clientSettingForm.ShowDialog();
+		}
+
+		// 閉じる前
+		private void AppMainForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			//サーバーが起動中の場合
+			if (AppSession.isRunningServer)
+			{
+				if (e.CloseReason == CloseReason.UserClosing)
+				{
+					// × ボタンをキャンセル
+					e.Cancel = true;
+					MessageBox.Show("終了する前にサーバーを停止する必要があります。");
+					serverConsoleForm.Show();
+				}
+			}
+		}
+
+		// 閉じた後
+		private void AppMainForm_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			// レジストリのお片付け
+			regkey.DeleteValue(process_name);
+			regkey.DeleteValue(process_dbg_name);
+			regkey.Close();
 		}
 	}
 }

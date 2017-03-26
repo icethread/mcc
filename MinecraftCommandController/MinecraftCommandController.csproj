@@ -69,6 +69,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppConst.cs" />
     <Compile Include="AppMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,6 +89,20 @@
     <Compile Include="Base\MccSettingPageBase.Designer.cs">
       <DependentUpon>MccSettingPageBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Contents\Dynmap\DmWeb.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Contents\Dynmap\DmWeb.Designer.cs">
+      <DependentUpon>DmWeb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Contents\Dynmap\DmWebmapForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Contents\Dynmap\DmWebmapForm.Designer.cs">
+      <DependentUpon>DmWebmapForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Daos\DmWebDao.cs" />
+    <Compile Include="Entities\DmWebEt.cs" />
     <Compile Include="Setting\ClientSettingForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -183,6 +198,12 @@
     <Compile Include="Util\Win32API.cs" />
     <EmbeddedResource Include="AppMainForm.resx">
       <DependentUpon>AppMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Contents\Dynmap\DmWeb.resx">
+      <DependentUpon>DmWeb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Contents\Dynmap\DmWebmapForm.resx">
+      <DependentUpon>DmWebmapForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\ClientSettingForm.resx">
       <DependentUpon>ClientSettingForm.cs</DependentUpon>
